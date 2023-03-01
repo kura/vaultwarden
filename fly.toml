@@ -18,6 +18,11 @@ processes = []
   SMTP_HOST="smtp.gmail.com"
   SMTP_PORT=587
   SMTP_SECURITY="starttls"
+  # DOMAIN=flyctl secrets
+  # SMTP_FROM=flyctl secrets
+  # SMTP_PASSWORD=flyctl secrets
+  # SMTP_USERNAME=flyctl secrets
+  # ADMIN_TOKEN=flyctl secrets
 
 [experimental]
   allowed_public_ports = []
