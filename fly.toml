@@ -11,6 +11,7 @@ processes = []
   destination = "/data"
 
 [env]
+  # https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
   SIGNUPS_ALLOWED=false
   SIGNUPS_VERIFY=true
   INVITATIONS_ALLOWED=false
