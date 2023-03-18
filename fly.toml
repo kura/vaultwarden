@@ -30,6 +30,8 @@ processes = []
   # SMTP_FROM=flyctl secrets
   # SMTP_PASSWORD=flyctl secrets
   # SMTP_USERNAME=flyctl secrets
+ 
+  # echo -n "<password>" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
   # ADMIN_TOKEN=flyctl secrets
 
 [experimental]
