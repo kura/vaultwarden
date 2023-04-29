@@ -1,8 +1,3 @@
-# fly.toml app configuration file generated for delicate-shape-1974 on 2023-04-28T15:51:55+01:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = "delicate-shape-1974"
 primary_region = "lhr"
 kill_signal = "SIGINT"
@@ -15,20 +10,27 @@ kill_timeout = "5s"
   auto_rollback = true
 
 [env]
+  # https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
   ADMIN_RATELIMIT_SECONDS = "10"
   ADMIN_SESSION_LIFETIME = "10"
-  INVITATIONS_ALLOWED = "f"
+  INVITATIONS_ALLOWED = "false"
   IP_HEADER = "X-Forwarded-For"
   LOGIN_RATELIMIT_MAX_BURST = "3"
   LOGIN_RATELIMIT_SECONDS = "10"
   PASSWORD_ITERATIONS = "2000000"
-  SHOW_PASSWORD_HINT = "f"
-  SIGNUPS_ALLOWED = "f"
-  SIGNUPS_VERIFY = "t"
+  SHOW_PASSWORD_HINT = "false"
+  SIGNUPS_ALLOWED = "false"
+  SIGNUPS_VERIFY = "true"
   SMTP_HOST = "smtp.gmail.com"
   SMTP_PORT = "587"
   SMTP_SECURITY = "starttls"
-  WEBSOCKET_ENABLED = "t"
+  WEBSOCKET_ENABLED = "true"
+  # DOMAIN=flyctl secrets
+  # SMTP_FROM=flyctl secrets
+  # SMTP_PASSWORD=flyctl secrets
+  # SMTP_USERNAME=flyctl secrets
+  # echo -n "<password>" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
+  # ADMIN_TOKEN=flyctl secrets
 
 [[mounts]]
   source = "vaultwarden_data_machines"
