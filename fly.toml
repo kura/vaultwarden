@@ -1,65 +1,60 @@
+# fly.toml app configuration file generated for delicate-shape-1974 on 2023-04-28T15:51:55+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
 app = "delicate-shape-1974"
+primary_region = "lhr"
 kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
+kill_timeout = "5s"
 
 [build]
   image = "vaultwarden/server:latest"
 
-[mounts]
-  source = "vaultwarden_data"
-  destination = "/data"
-
-[env]
-  # https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
-  SIGNUPS_ALLOWED=false
-  SIGNUPS_VERIFY=true
-  INVITATIONS_ALLOWED=false
-  SHOW_PASSWORD_HINT=false
-  WEBSOCKET_ENABLED=true
-  IP_HEADER="X-Forwarded-For"
-  PASSWORD_ITERATIONS=2000000
-  LOGIN_RATELIMIT_SECONDS=10
-  LOGIN_RATELIMIT_MAX_BURST=3
-  ADMIN_RATELIMIT_SECONDS=10
-  ADMIN_SESSION_LIFETIME=10
-  SMTP_HOST="smtp.gmail.com"
-  SMTP_PORT=587
-  SMTP_SECURITY="starttls"
-  # DOMAIN=flyctl secrets
-  # SMTP_FROM=flyctl secrets
-  # SMTP_PASSWORD=flyctl secrets
-  # SMTP_USERNAME=flyctl secrets
- 
-  # echo -n "<password>" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
-  # ADMIN_TOKEN=flyctl secrets
-
 [experimental]
-  allowed_public_ports = []
   auto_rollback = true
 
+[env]
+  ADMIN_RATELIMIT_SECONDS = "10"
+  ADMIN_SESSION_LIFETIME = "10"
+  INVITATIONS_ALLOWED = "f"
+  IP_HEADER = "X-Forwarded-For"
+  LOGIN_RATELIMIT_MAX_BURST = "3"
+  LOGIN_RATELIMIT_SECONDS = "10"
+  PASSWORD_ITERATIONS = "2000000"
+  SHOW_PASSWORD_HINT = "f"
+  SIGNUPS_ALLOWED = "f"
+  SIGNUPS_VERIFY = "t"
+  SMTP_HOST = "smtp.gmail.com"
+  SMTP_PORT = "587"
+  SMTP_SECURITY = "starttls"
+  WEBSOCKET_ENABLED = "t"
+
+[[mounts]]
+  source = "vaultwarden_data_machines"
+  destination = "/data"
+  processes = ["app"]
+
 [[services]]
+  protocol = "tcp"
   internal_port = 80
   processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
 
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
   [services.concurrency]
+    type = "connections"
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
 
   [[services.tcp_checks]]
-    grace_period = "1s"
     interval = "15s"
-    restart_limit = 0
     timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
