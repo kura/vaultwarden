@@ -4,7 +4,7 @@ kill_signal = "SIGINT"
 kill_timeout = "5s"
 
 [build]
-  image = "vaultwarden/server:latest"
+  image = "vaultwarden/server:testing-alpine"
 
 [experimental]
   auto_rollback = true
@@ -24,12 +24,14 @@ kill_timeout = "5s"
   SMTP_HOST = "smtp.gmail.com"
   SMTP_PORT = "587"
   SMTP_SECURITY = "starttls"
-  WEBSOCKET_ENABLED = "true"
+  WEBSOCKET_ENABLED = "false"
   # DOMAIN=flyctl secrets
   # SMTP_FROM=flyctl secrets
   # SMTP_PASSWORD=flyctl secrets
   # SMTP_USERNAME=flyctl secrets
-  # echo -n "<password>" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
+  # password; echo -n "<password>" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
+  # or
+  # password_argon2
   # ADMIN_TOKEN=flyctl secrets
 
 [[mounts]]
@@ -50,6 +52,7 @@ kill_timeout = "5s"
   [[services.ports]]
     port = 443
     handlers = ["tls", "http"]
+
   [services.concurrency]
     type = "connections"
     hard_limit = 25
