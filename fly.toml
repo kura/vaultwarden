@@ -33,6 +33,9 @@ kill_timeout = "5s"
   # or
   # password_argon2
   # ADMIN_TOKEN=flyctl secrets
+  PUSH_ENABLED=true
+  # PUSH_INSTALLATION_ID=flyctl secrets
+  # PUSH_INSTALLATION_KEY=flyctl secrets
 
 [[mounts]]
   source = "vaultwarden_data_machines"
