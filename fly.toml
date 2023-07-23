@@ -25,6 +25,7 @@ kill_timeout = "5s"
   SMTP_PORT = "587"
   SMTP_SECURITY = "starttls"
   WEBSOCKET_ENABLED = "false"
+  LOG_LEVEL = "off"
   # DOMAIN=flyctl secrets
   # SMTP_FROM=flyctl secrets
   # SMTP_PASSWORD=flyctl secrets
